@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
         name: {
             type: DataTypes.STRING(20),
         },
-        email: {
+        username: {
             type: DataTypes.STRING(30),
             unique: true,
             allowNull: false,
@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         },
         first: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: true,
+        },
+        auto: {
             type: DataTypes.BOOLEAN,
             defaultValue: true,
         }
