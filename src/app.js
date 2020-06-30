@@ -13,12 +13,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.use(logger('dev'));
+app.use('/', require('./routes'));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc))
 
 app.set('jwt-secret', process.env.JWT_SECRET);
 
 sequelize.sync();
 
-app.listen(8080, () => {
+app.listen(8000, () => {
     console.log("Server On");
 });
