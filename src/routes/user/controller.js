@@ -1,13 +1,18 @@
 const { User } = require('../../models');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 
 const register = async (req, res, next) => {
     const { name, username, password } = req.body;
+    const secret = req.app.get('crypto-secret');
+    const cipher = crypto.createCipher('aes-256-cbc', secret);
+    let result = cipher.update(password, 'utf8', 'base64');
+    result += cipher.final('base64');
     try {
         await User.create({ 
             name, 
             username, 
-            password
+            password: result
         });
     } catch (err) {
         res.status(409).json({
@@ -16,29 +21,49 @@ const register = async (req, res, next) => {
         });
     }
     res.status(200).json({
-        message: "회원가입 성공"
+        message: "회원가입 성공",
     });
 }
 
 const login = async (req, res, next) => {
     const { username, password } = req.body;
+    const cryptoSecret = req.app.get('crypto-secret');
+    const decipher = crypto.createDecipher('aes-256-cbc', cryptoSecret);
     const secret = req.app.get('jwt-secret');
+    const refreshSecret = req.app.get('refresh-secret');
     try {
         const user = await User.findOne({ 
             where: {
                 username
             }
         });
-        if (user.password === password) {
-            const token = await jwt.sign({
+        let result = decipher.update(user.password, 'base64', 'utf8');
+        result += decipher.final('utf8');
+        if (result === password) {
+            const accessToken = await jwt.sign({
                 name: user.name,
                 username: user.username
             }, secret, {
                 expiresIn: '30m'
             });
+            const refreshToken = await jwt.sign({
+                name: user.name,
+                username: user.username,
+            }, refreshSecret, {
+                expiresIn: '1w'
+            });
+            await user.update({
+                refresh: refreshToken,
+                first: false,
+                where: {
+                    username
+                }
+            });
             res.status(200).json({
                 message: "로그인 성공",
-                accessToken: token
+                accessToken,
+                refreshToken,
+                first: user.first
             })
         } else {
             res.status(409).json({
@@ -52,7 +77,8 @@ const login = async (req, res, next) => {
     }
 }
 
+
 module.exports = {
     register,
-    login
+    login,
 }
