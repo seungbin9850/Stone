@@ -19,6 +19,9 @@ module.exports = (sequelize, DataTypes) => {
         auto: {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
+        },
+        refresh: {
+            type: DataTypes.STRING(100),
         }
     });
 }
