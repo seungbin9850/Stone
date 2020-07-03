@@ -77,8 +77,34 @@ const login = async (req, res, next) => {
     }
 }
 
+const refresh = async (req, res, next) => {
+    const refresh = req.headers['refresh_token'];
+    const secret = req.app.get('jwt-secret');
+    try {
+        const user = await User.findOne({
+            where: {
+                refresh
+            }
+        });
+        const accessToken = await jwt.sign({
+            name: user.name,
+            username: user.username
+        }, secret, {
+            expiresIn: '30m'
+        });
+        res.status(200).json({
+            message: "재발급 성공",
+            accessToken
+        })
+    } catch (err) {
+        res.status(500).json({
+            message: err.message
+        })
+    }
+}
 
 module.exports = {
     register,
     login,
+    refresh
 }
