@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue: false,
         },
         refresh: {
-            type: DataTypes.STRING(100),
+            type: DataTypes.STRING(255),
         }
     });
 }
