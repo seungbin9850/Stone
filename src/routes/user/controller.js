@@ -41,12 +41,14 @@ const login = async (req, res, next) => {
         result += decipher.final('utf8');
         if (result === password) {
             const accessToken = await jwt.sign({
+                id: user.id,
                 name: user.name,
                 username: user.username
             }, secret, {
                 expiresIn: '30m'
             });
             const refreshToken = await jwt.sign({
+                id: user.id,
                 name: user.name,
                 username: user.username,
             }, refreshSecret, {
