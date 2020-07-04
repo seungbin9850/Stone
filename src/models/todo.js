@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        do: {
+        what: {
             type: DataTypes.STRING(200),
             allowNull: false,
         },
