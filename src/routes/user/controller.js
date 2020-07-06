@@ -40,32 +40,44 @@ const login = async (req, res, next) => {
         let result = decipher.update(user.password, 'base64', 'utf8');
         result += decipher.final('utf8');
         if (result === password) {
-            const accessToken = await jwt.sign({
+            const access_token = await jwt.sign({
                 id: user.id,
                 name: user.name,
                 username: user.username
             }, secret, {
                 expiresIn: '30m'
             });
-            const refreshToken = await jwt.sign({
+            const refresh_token = await jwt.sign({
                 id: user.id,
                 name: user.name,
                 username: user.username,
             }, refreshSecret, {
                 expiresIn: '1w'
             });
+            if (user.first === true) {
+                await user.update({
+                    refresh: refresh_token,
+                    first: false,
+                    where: {
+                        username
+                    }
+                })
+                res.status(201).json({
+                    message: "첫 로그인 성공",
+                    access_token,
+                    refresh_token,
+                })
+            }
             await user.update({
-                refresh: refreshToken,
-                first: false,
+                refresh: refresh_token,
                 where: {
                     username
                 }
             });
             res.status(200).json({
                 message: "로그인 성공",
-                accessToken,
-                refreshToken,
-                first: user.first
+                access_token,
+                refresh_token,
             })
         } else {
             res.status(409).json({
