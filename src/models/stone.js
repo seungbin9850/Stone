@@ -7,6 +7,9 @@ module.exports = (sequelize, DataTypes) => {
         growth: {
             type: DataTypes.INTEGER,
             defaultValue: 0,
+        },
+        left: {
+            type: DataTypes.INTEGER,
         }
     });
 }
