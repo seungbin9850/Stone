@@ -22,6 +22,14 @@ module.exports = (sequelize, DataTypes) => {
         },
         refresh: {
             type: DataTypes.STRING(255),
+        },
+        hour: {
+            type: DataTypes.INTEGER,
+            defaultValue: 22
+        },
+        minute: {
+            type: DataTypes.INTEGER,
+            defaultValue: 00
         }
     });
 }
