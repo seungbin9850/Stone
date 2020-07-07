@@ -12,7 +12,7 @@ db.User = require('./user')(sequelize, Sequelize);
 db.Todo = require('./todo')(sequelize, Sequelize);
 db.Goal = require('./goal')(sequelize, Sequelize);
 db.Stone = require('./stone')(sequelize, Sequelize);
-db.phrase = require('./phrase')(sequelize, Sequelize);
+db.Phrase = require('./phrase')(sequelize, Sequelize);
 
 db.User.hasMany(db.Todo);
 db.Todo.belongsTo(db.User);
