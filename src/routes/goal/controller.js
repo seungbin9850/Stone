@@ -1,8 +1,8 @@
-const { Goal } = require('../../models');
+const { Goal, Stone } = require('../../models');
 
 const setGoal = async (req, res, next) => {
     const userId = req.decoded.id;
-    const { year, month, day, what } = req.body;
+    const { year, month, day, what, left } = req.body;
     try {
         await Goal.create({
             userId,
@@ -10,6 +10,10 @@ const setGoal = async (req, res, next) => {
             month,
             day,
             what
+        });
+        await Stone.create({
+            userId,
+            left
         })
     } catch (err) {
         res.status(500).json({
