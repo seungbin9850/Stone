@@ -1,0 +1,379 @@
+swagger: "2.0"
+info:
+  description: 돌멩이
+  version: "1.0.0"
+  title: 돌멩이
+host: "10.156.145.141:8000"
+basePath: "/"
+tags:
+  - name: "User"
+    description: "User API"
+  - name: "Todo"
+    description: "Todo API"
+  - name: "Goal"
+    description: "Goal API"
+  - name: "Main"
+    description: "Main API"
+schemes:
+- "http"
+paths:
+  /user/register:
+    post:
+      produces:
+        - "application/json"
+      tags:
+        - "User"
+      summary: "회원가입"
+      description: "회원가입"
+      parameters:
+        - name: "register"
+          in: "body"
+          description: "register"
+          schema: 
+            type: "string"
+            properties: 
+              name:
+                type: "string"
+                example: "name"
+              username:
+                type: "string"
+                example: "username"
+              password:
+                type: "string"
+                example: "password"
+      responses:
+        200:
+          description: "회원가입 성공"
+          schema: 
+            type: "object"
+            properties:
+              message:
+                type: "string"
+                example: "회원가입 성공"
+        409:
+          description: "회원가입 실패"
+          schema: 
+            type: "object"
+            properties:
+              message:
+                type: "string"
+                example: "이미 있는 유저"
+        500:
+          description: "회원가입 실패"
+          schema: 
+            type: "object"
+            properties:
+              message:
+                type: "string"
+                example: "회원가입 실패"
+  /user/login:
+    post:
+      produces:
+      - "application/json"
+      tags:
+      - "User"
+      summary: "로그인"
+      description: "로그인"
+      parameters:
+        - name: "login"
+          in: "body"
+          description: "login"
+          schema: 
+            type: "string"
+            properties: 
+              username:
+                type: "string"
+                example: "username"
+              password:
+                type: "string"
+                example: "password"
+      responses:
+        200:
+          description: "로그인 성공"
+          schema: 
+            type: "object"
+            properties:
+              message: 
+                type: "string"
+                example: "성공"
+              access_token: 
+                type: "string"
+                example: "accessToken"
+              refresh_token: 
+                type: "string"
+                example: "refreshToken"
+        201:
+          description: "첫 로그인 성공"
+          schema: 
+            type: "object"
+            properties:
+              message: 
+                type: "string"
+                example: "첫 로그인 성공"
+              access_token: 
+                type: "string"
+                example: "accessToken"
+              refresh_token: 
+                type: "string"
+                example: "refreshToken"        
+        404:
+          description: "로그인 실패"
+          schema:
+            type: "object"
+            properties:
+              message: 
+                type: "string"
+                example: "존재하지 않는 유저"
+        409:
+          description: "로그인 실패"
+          schema:
+            type: "object"
+            properties:
+              message: 
+                type: "string"
+                example: "틀린 비밀번호"
+        500:
+          description: "로그인 실패"
+  /user/refresh:
+    get:
+      produces:
+      - "application/json"
+      tags:
+      - "User"
+      summary: "토큰 재발급"
+      description: "토큰 재발급"
+      parameters:
+        - name: "refresh_token"
+          in: "header"
+          type: "string"
+          description: "리프레쉬 토큰"   
+      responses:
+        200:
+          description: "재발급 성공"
+          schema: 
+            type: "object"
+            properties:
+              message: 
+                type: "string"
+                example: "성공"
+              access_token: 
+                type: "string"
+                example: "access_token"
+        403:
+          description: "로그인 되어있지 않음"
+          schema:
+            type: "object"
+            properties:
+              message: 
+                type: "string"
+                example: "로그인 되어있지 않음"
+        500:
+          description: "재발급 실패"
+  /todo:
+    post:
+      produces:
+        - "application/json"
+      tags:
+        - "Todo"
+      summary: "오늘 할 일 설정"
+      description: "오늘 할 일 설정"
+      parameters:
+        - name: "todo"
+          in: "body"
+          description: "todo"
+          schema: 
+            type: "string"
+            properties: 
+              year:
+                type: "number"
+                example: 2020
+              month:
+                type: "number"
+                example: 12
+              day:
+                type: "number"
+                example: 31
+              what:
+                type: "string"
+                example: "doododoo"
+        - name: "access_token"
+          in: "header"
+          type: "string"
+          description: "액세스 토큰"
+      responses:
+        200:
+          description: "오늘 할 일 설정 성공"
+          schema: 
+            type: "object"
+            properties:
+              message: 
+                type: "string"
+                example: "성공"
+        500:
+          description: "설정 실패"
+          schema:
+            type: "object"
+            properties:
+              message: 
+                type: "string"
+                example: "설정 실패"
+  /todo/success/{id}:
+    get:
+      produces:
+        - "application/json"
+      tags:
+        - "Todo"
+      summary: "오늘 할 일 모두 완료"
+      description: "오늘 할 일 모두 완료"
+      parameters:
+      - name: "id"
+        in: "path"
+        type: "string"
+        description: "날짜 아이디"
+        required: true
+      responses:
+        200:
+          description: "오늘 할 일 모두 완료"
+          schema: 
+            type: "object"
+            properties:
+              message: 
+                type: "string"
+                example: "성공"
+        500:
+          description: "실패"
+          schema:
+            type: "object"
+            properties:
+              message: 
+                type: "string"
+                example: "실패"
+  /todo/failed/{id}:
+    get:
+      produces:
+        - "application/json"
+      tags:
+        - "Todo"
+      summary: "오늘 할 일 실패"
+      description: "오늘 할 일 실패"
+      parameters:
+      - name: "id"
+        in: "path"
+        type: "string"
+        description: "날짜 아이디"
+        required: true
+      responses:
+        200:
+          description: "오늘 할 일 실패"
+          schema: 
+            type: "object"
+            properties:
+              message: 
+                type: "string"
+                example: "성공"
+        500:
+          description: "실패"
+          schema:
+            type: "object"
+            properties:
+              message: 
+                type: "string"
+                example: "실패"
+  /goal:
+    post:
+      produces:
+        - "application/json"
+      tags:
+        - "Goal"
+      summary: "목표 설정"
+      description: "목표 설정"
+      parameters:
+        - name: "goal"
+          in: "body"
+          description: "goal"
+          schema: 
+            type: "string"
+            properties: 
+              year:
+                type: "number"
+                example: 2020
+              month:
+                type: "number"
+                example: 7
+              day:
+                type: "number"
+                example: 17
+              what:
+                type: "string"
+                example: "doododoo"
+              left:
+                type: "number"
+                example: 10
+      responses:
+        200:
+          description: "목표 설정 성공"
+          schema: 
+            type: "object"
+            properties:
+              message: 
+                type: "string"
+                example: "성공"
+        500:
+          description: "목표 설정 실패"
+          schema:
+            type: "object"
+            properties:
+              message: 
+                type: "string"
+                example: "실패"
+  /main:
+    get:
+      produces:
+        - "application/json"
+      tags:
+        - "Main"
+      summary: "메인 돌멩이"
+      description: "메인 돌멩이"
+      parameters:
+      - name: "access_token"
+        in: "header"
+        type: "string"
+        description: "액세스 토큰"   
+      responses:
+        200:
+          description: "메인 로딩 성공"
+          schema: 
+            type: "object"
+            properties:
+              name: 
+                type: "string"
+                example: "name"
+              hour:
+                type: "number"
+                example: 22
+              minute:
+                type: "number"
+                example: 0
+              level:
+                type: "number"
+                example: 1
+              growth:
+                type: "number"
+                example: 100
+              phrase_name:
+                type: "string"
+                example: "유명철"  
+              phrase_word:
+                type: "string"
+                example: "지랄좀 하지마 씨발"
+              message:
+                type: "string"
+                example: "성공" 
+        500:
+          description: "메인 로딩 실패"
+          schema:
+            type: "object"
+            properties:
+              message: 
+                type: "string"
+                example: "실패"
