@@ -366,6 +366,11 @@ paths:
               phrase_word:
                 type: "string"
                 example: "지랄좀 하지마 씨발"
+              todo_what:
+                type: "array"
+                items:
+                  type: "string"
+                  example: "오늘 하루 잘 살기"
               message:
                 type: "string"
                 example: "성공" 
