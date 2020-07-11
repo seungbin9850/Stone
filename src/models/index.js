@@ -15,7 +15,7 @@ db.Stone = require('./stone')(sequelize, Sequelize);
 db.Phrase = require('./phrase')(sequelize, Sequelize);
 db.Check = require('./check')(sequelize, Sequelize);
 
-db.User.hasMany(db.Todo);
+db.User.hasOne(db.Todo);
 db.Todo.belongsTo(db.User);
 db.User.hasOne(db.Stone);
 db.Stone.belongsTo(db.User);
