@@ -4,6 +4,6 @@ const authMiddleware = require('../../middlewares/auth');
 
 router.post('/', authMiddleware, controller.setTodo);
 router.post('/success', authMiddleware, controller.success);
-router.post('/failed', authMiddleware, controller.success);
+router.post('/failed', authMiddleware, controller.fail);
 
 module.exports = router;
