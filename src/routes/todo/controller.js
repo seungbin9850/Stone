@@ -55,7 +55,26 @@ const success = async (req, res, next) => {
     }
 }
 
+const fail = async (req, res, next) => {
+    const userId = req.decoded.id;
+    try {
+        await Todo.destroy({
+            where: {
+                userId
+            }
+        })
+        res.status(200).json({
+            message: "성공"
+        })
+    } catch (err) {
+        res.status(472).json({
+            message: err.message
+        })
+    }
+}
+
 module.exports = {
     setTodo,
-    success
+    success,
+    fail
 }
