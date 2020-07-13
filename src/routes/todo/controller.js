@@ -4,18 +4,19 @@ const setTodo = async(req, res, next) => {
     const what = req.body.what.join('^-;%&');
     const userId = req.decoded.id;
     try {
-        const todo = await Todo.findOne({
+        const already = await Todo.findOne({
             where: {
                 userId
             }
         })
-        if (!todo) {
-            await Todo.create({
+        if (!already) {
+            const todo = await Todo.create({
                 what,
                 userId
             });
             res.status(200).json({
-                message: "성공"
+                message: "성공",
+                todo
             })
         } else {
             res.status(471).json({
