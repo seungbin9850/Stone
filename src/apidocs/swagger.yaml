@@ -194,8 +194,10 @@ paths:
                 type: "number"
                 example: 31
               what:
-                type: "string"
-                example: "doododoo"
+                type: "array"
+                items:
+                  type: "string"
+                  example: "doododoo"
         - name: "access_token"
           in: "header"
           type: "string"
@@ -209,6 +211,11 @@ paths:
               message: 
                 type: "string"
                 example: "성공"
+              todo:
+                type: "array"
+                items:
+                  type: "string"
+                  example: "오늘 하루 잘 살기"
         500:
           description: "설정 실패"
           schema:
@@ -217,7 +224,7 @@ paths:
               message: 
                 type: "string"
                 example: "설정 실패"
-  /todo/success/{id}:
+  /todo/success:
     get:
       produces:
         - "application/json"
@@ -226,11 +233,10 @@ paths:
       summary: "오늘 할 일 모두 완료"
       description: "오늘 할 일 모두 완료"
       parameters:
-      - name: "id"
-        in: "path"
+      - name: "access_token"
+        in: "header"
         type: "string"
-        description: "날짜 아이디"
-        required: true
+        description: "액세스 토큰"
       responses:
         200:
           description: "오늘 할 일 모두 완료"
@@ -248,7 +254,7 @@ paths:
               message: 
                 type: "string"
                 example: "실패"
-  /todo/failed/{id}:
+  /todo/failed:
     get:
       produces:
         - "application/json"
@@ -257,11 +263,10 @@ paths:
       summary: "오늘 할 일 실패"
       description: "오늘 할 일 실패"
       parameters:
-      - name: "id"
-        in: "path"
+      - name: "access_token"
+        in: "header"
         type: "string"
-        description: "날짜 아이디"
-        required: true
+        description: "액세스 토큰"
       responses:
         200:
           description: "오늘 할 일 실패"
