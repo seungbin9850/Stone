@@ -1,4 +1,4 @@
-const { Todo, Stone } = require('../../models');
+const { Todo, Stone, Check } = require('../../models');
 
 const setTodo = async(req, res, next) => {
     const what = req.body.what.join('^-;%&');
@@ -31,6 +31,7 @@ const setTodo = async(req, res, next) => {
 }
 
 const success = async (req, res, next) => {
+    const { year, month, day } = req.body;
     const userId = req.decoded.id;
     try {
         await Todo.destroy({
@@ -46,6 +47,13 @@ const success = async (req, res, next) => {
             stone.growth -= 100;
             stone.level += 1;
         }
+        await Check.create({
+            year,
+            month,
+            day,
+            userId,
+            check: true
+        })
         res.status(200).json({
             message: "성공"
         })
@@ -63,6 +71,13 @@ const fail = async (req, res, next) => {
             where: {
                 userId
             }
+        })
+        await Check.create({
+            year,
+            month,
+            day,
+            userId,
+            check: false
         })
         res.status(200).json({
             message: "성공"
