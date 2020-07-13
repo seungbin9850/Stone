@@ -216,6 +216,14 @@ paths:
                 items:
                   type: "string"
                   example: "오늘 하루 잘 살기"
+        471:
+          description: "이미 설정함"
+          schema:
+            type: "object"
+            properties:
+              message:
+                type: "string"
+                example: "이미 계획을 설정함"
         500:
           description: "설정 실패"
           schema:
