@@ -183,16 +183,7 @@ paths:
           description: "todo"
           schema: 
             type: "string"
-            properties: 
-              year:
-                type: "number"
-                example: 2020
-              month:
-                type: "number"
-                example: 12
-              day:
-                type: "number"
-                example: 31
+            properties:
               what:
                 type: "array"
                 items:
@@ -241,10 +232,25 @@ paths:
       summary: "오늘 할 일 모두 완료"
       description: "오늘 할 일 모두 완료"
       parameters:
-      - name: "access_token"
-        in: "header"
-        type: "string"
-        description: "액세스 토큰"
+        - name: "when"
+          in: "body"
+          description: "when"
+          schema:
+            type: "string"
+            properties:
+              year:
+                type: "number"
+                example: 2020
+              month:
+                type: "number"
+                example: 12
+              day:
+                type: "number"
+                example: 31
+        - name: "access_token"
+          in: "header"
+          type: "string"
+          description: "액세스 토큰"
       responses:
         200:
           description: "오늘 할 일 모두 완료"
@@ -271,6 +277,21 @@ paths:
       summary: "오늘 할 일 실패"
       description: "오늘 할 일 실패"
       parameters:
+      - name: "when"
+        in: "body"
+        description: "when"
+        schema:
+          type: "string"
+          properties:
+            year:
+              type: "number"
+              example: 2020
+            month:
+              type: "number"
+              example: 12
+            day:
+              type: "number"
+              example: 31`
       - name: "access_token"
         in: "header"
         type: "string"
