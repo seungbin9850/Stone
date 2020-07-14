@@ -21,7 +21,7 @@ const showMain = async (req, res, next) => {
         const phrase = await Phrase.findOne({
             order: sequelize.random()
         });
-        if (todo) {
+        if (todo.what) {
             res.status(200).json({
                 name: user.name,
                 hour: user.hour,
