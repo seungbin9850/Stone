@@ -38,7 +38,9 @@ const success = async (req, res, next) => {
             }
         })
         const stone = await Stone.findOne({
-            where: userId
+            where: {
+                userId
+            }
         })
         stone.growth += 100 * (5 / stone.left);
         if (stone.growth >= 100) {
