@@ -47,9 +47,9 @@ const success = async (req, res, next) => {
             stone.growth -= 100;
             stone.level += 1;
         }
-        await Stone.update({
+        await stone.update({
             growth: stone.growth,
-            level: stone.level,
+            level: stone.level
         })
         await Check.create({
             year,
