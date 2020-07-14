@@ -42,13 +42,13 @@ const success = async (req, res, next) => {
                 userId
             }
         })
-        stone.growth += 100 * (5 / stone.left);
-        if (stone.growth >= 100) {
-            stone.growth -= 100;
+        const growth = stone.growth += 100 * (5 / stone.left);
+        if (growth >= 100) {
+            growth -= 100;
             stone.level += 1;
         }
         await stone.update({
-            growth: stone.growth,
+            growth,
             level: stone.level
         })
         await Check.create({
