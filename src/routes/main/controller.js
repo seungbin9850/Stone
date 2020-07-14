@@ -42,6 +42,7 @@ const showMain = async (req, res, next) => {
                 growth: stone.growth,
                 phrase_name: phrase.name,
                 phrase_word: phrase.word,
+                todo_what: [],
                 message: "성공"
             })
         }
