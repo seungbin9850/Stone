@@ -1,4 +1,4 @@
-const { User } = require('../../models');
+const { User, Todo } = require('../../models');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 
@@ -9,10 +9,16 @@ const register = async (req, res, next) => {
     let result = cipher.update(password, 'utf8', 'base64');
     result += cipher.final('base64');
     try {
-        await User.create({ 
+        const user = await User.create({ 
             name, 
             username, 
             password: result
+        });
+        await Todo.create({
+            userId: user.id
+        })
+        res.status(200).json({
+            message: "회원가입 성공",
         });
     } catch (err) {
         res.status(409).json({
@@ -20,9 +26,6 @@ const register = async (req, res, next) => {
             err: err.message
         });
     }
-    res.status(200).json({
-        message: "회원가입 성공",
-    });
 }
 
 const login = async (req, res, next) => {
