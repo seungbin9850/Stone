@@ -10,13 +10,12 @@ const setTodo = async(req, res, next) => {
             }
         })
         if (!already) {
-            const todo = await Todo.create({
+            await Todo.create({
                 what,
                 userId
             });
             res.status(200).json({
                 message: "성공",
-                todo
             })
         } else {
             res.status(471).json({
