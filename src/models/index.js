@@ -14,6 +14,7 @@ db.Goal = require('./goal')(sequelize, Sequelize);
 db.Stone = require('./stone')(sequelize, Sequelize);
 db.Phrase = require('./phrase')(sequelize, Sequelize);
 db.Check = require('./check')(sequelize, Sequelize);
+db.Diary = require('./diary')(sequelize, Sequelize);
 
 db.User.hasOne(db.Todo);
 db.Todo.belongsTo(db.User);
@@ -23,5 +24,7 @@ db.User.hasOne(db.Goal);
 db.Goal.belongsTo(db.User);
 db.User.hasMany(db.Check);
 db.Check.belongsTo(db.User);
+db.User.hasMany(db.Diary);
+db.Diary.belongsTo(db.User);
 
 module.exports = db;
