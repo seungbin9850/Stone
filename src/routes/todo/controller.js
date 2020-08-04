@@ -42,21 +42,21 @@ const success = async (req, res, next) => {
                 userId
             }
         })
-        const growth = stone.growth += 100 * (5 / stone.left);
-        if (growth >= 100) {
-            growth -= 100;
+        stone.growth += 100 * (5 / stone.left);
+        if (stone.growth >= 100) {
+            stone.growth -= 100;
             stone.level += 1;
         }
-        await stone.update({
-            growth,
-            level: stone.level
-        })
+        stone.save();
         await Check.create({
             year,
             month,
             day,
             userId,
             check: true
+        });
+        await Todo.create({
+            userId
         })
         res.status(200).json({
             message: "성공"
@@ -82,6 +82,9 @@ const fail = async (req, res, next) => {
             day,
             userId,
             check: false
+        })
+        await Todo.create({
+            userId
         })
         res.status(200).json({
             message: "성공"
