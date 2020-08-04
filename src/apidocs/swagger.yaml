@@ -207,6 +207,14 @@ paths:
                 items:
                   type: "string"
                   example: "오늘 하루 잘 살기"
+        403:
+          description: "로그인 되어있지 않음"
+          schema:
+            type: "object"
+            properties:
+              message: 
+                type: "string"
+                example: "로그인 되어있지 않음"
         471:
           description: "이미 설정함"
           schema:
@@ -224,7 +232,7 @@ paths:
                 type: "string"
                 example: "설정 실패"
   /todo/success:
-    get:
+    post:
       produces:
         - "application/json"
       tags:
@@ -260,6 +268,14 @@ paths:
               message: 
                 type: "string"
                 example: "성공"
+        403:
+          description: "로그인 되어있지 않음"
+          schema:
+            type: "object"
+            properties:
+              message: 
+                type: "string"
+                example: "로그인 되어있지 않음"
         500:
           description: "실패"
           schema:
@@ -269,7 +285,7 @@ paths:
                 type: "string"
                 example: "실패"
   /todo/failed:
-    get:
+    post:
       produces:
         - "application/json"
       tags:
@@ -305,6 +321,14 @@ paths:
               message: 
                 type: "string"
                 example: "성공"
+        403:
+          description: "로그인 되어있지 않음"
+          schema:
+            type: "object"
+            properties:
+              message: 
+                type: "string"
+                example: "로그인 되어있지 않음"
         500:
           description: "실패"
           schema:
@@ -352,6 +376,14 @@ paths:
               message: 
                 type: "string"
                 example: "성공"
+        403:
+          description: "로그인 되어있지 않음"
+          schema:
+            type: "object"
+            properties:
+              message: 
+                type: "string"
+                example: "로그인 되어있지 않음"
         500:
           description: "목표 설정 실패"
           schema:
@@ -396,10 +428,10 @@ paths:
                 example: 100
               phrase_name:
                 type: "string"
-                example: "유명철"  
+                example: "최영"  
               phrase_word:
                 type: "string"
-                example: "지랄좀 하지마 씨발"
+                example: "금 보기를 돌같이 하라"
               todo_what:
                 type: "array"
                 items:
@@ -408,6 +440,14 @@ paths:
               message:
                 type: "string"
                 example: "성공" 
+        403:
+          description: "로그인 되어있지 않음"
+          schema:
+            type: "object"
+            properties:
+              message: 
+                type: "string"
+                example: "로그인 되어있지 않음"
         500:
           description: "메인 로딩 실패"
           schema:
