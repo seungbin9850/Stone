@@ -367,6 +367,10 @@ paths:
               left:
                 type: "number"
                 example: 10
+        - name: "access_token"
+          in: "header"
+          type: "string"
+          description: "액세스 토큰"  
       responses:
         200:
           description: "목표 설정 성공"
